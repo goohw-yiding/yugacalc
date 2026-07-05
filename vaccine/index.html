@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아기 예방접종 일정 계산기 - 출생일로 접종 스케줄 확인 | 육아 계산기</title>
+<meta name="description" content="아기 출생일만 입력하면 질병관리청 표준예방접종일정표 기준으로 BCG, B형간염, DTaP, 폐렴구균, MMR 등 접종 날짜를 자동 계산합니다. 무료, 회원가입 없음.">
+<link rel="canonical" href="https://yugacalc.com/vaccine/">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3293445488923111" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"아기 예방접종 일정 계산기","applicationCategory":"HealthApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"inLanguage":"ko"}
+</script>
+</head>
+<body>
+<div class="wrap">
+<header class="site"><a href="/"><span class="logo">🍼</span> 육아 계산기</a></header>
+
+<h1>예방접종 일정 계산기</h1>
+<p class="desc">아기 출생일만 입력하면 표준예방접종일정표 기준 접종 스케줄을 날짜로 계산해드립니다. 지난 접종은 흐리게, 다음 접종은 강조 표시됩니다.</p>
+
+<div class="card">
+  <label>아기 출생일</label>
+  <input type="date" id="birth">
+
+  <button class="go" onclick="calc()">접종 일정 계산하기</button>
+
+  <div class="result" id="result">
+    <div id="summary" style="font-weight:700;margin-bottom:4px"></div>
+    <table class="rt" id="rt"></table>
+    <div class="note">권장 시기의 시작일 기준입니다. 실제 접종은 아기 컨디션과 병원 사정에 따라 권장 기간 내에서 조정하면 됩니다. 일본뇌염은 백신 종류(불활성화/생백신)에 따라 횟수가 다르며, 인플루엔자는 생후 6개월부터 매년 접종합니다.</div>
+  </div>
+</div>
+
+<div class="card faq">
+  <h3>어떤 기준으로 계산하나요?</h3>
+  <p>질병관리청 어린이 표준예방접종일정표를 기준으로 합니다. BCG(결핵), B형간염, DTaP(디프테리아·파상풍·백일해), 폴리오, Hib, 폐렴구균, 로타바이러스, MMR(홍역·유행성이하선염·풍진), 수두, A형간염, 일본뇌염이 포함되며 모두 국가예방접종(무료)입니다.</p>
+  <h3>접종 시기를 놓쳤어요</h3>
+  <p>대부분의 백신은 늦게라도 이어서 맞으면 됩니다(따라잡기 접종). 처음부터 다시 맞을 필요는 없는 경우가 많으니, 접종 수첩을 들고 소아청소년과에 방문해 일정을 조정받으세요.</p>
+  <h3>여러 백신을 같은 날 맞아도 되나요?</h3>
+  <p>됩니다. 동시 접종은 안전성이 확인되어 있으며, 방문 횟수를 줄이기 위해 표준일정 자체가 같은 시기에 여러 백신을 배치하고 있습니다.</p>
+</div>
+
+<a class="cta" href="/formula/">🍼 접종 후 컨디션 관리, 수유량부터 체크하기</a>
+
+<footer>© 육아 계산기 · 계산 결과는 참고용입니다. · <a href="/privacy/">개인정보처리방침</a></footer>
+</div>
+
+<script>
+// [접종명, 권장 시작 개월, 표기 시기]
+const SCHED=[
+ ['B형간염 1차',0,'출생 직후'],
+ ['BCG(결핵)',0,'생후 4주 이내'],
+ ['B형간염 2차',1,'생후 1개월'],
+ ['DTaP 1차 · 폴리오 1차 · Hib 1차 · 폐렴구균 1차 · 로타 1차',2,'생후 2개월'],
+ ['DTaP 2차 · 폴리오 2차 · Hib 2차 · 폐렴구균 2차 · 로타 2차',4,'생후 4개월'],
+ ['DTaP 3차 · 폴리오 3차 · Hib 3차 · 폐렴구균 3차 · B형간염 3차 (로타텍은 3차)',6,'생후 6개월'],
+ ['인플루엔자 (매년, 첫해는 4주 간격 2회)',6,'생후 6개월부터'],
+ ['MMR 1차 · 수두 · Hib 4차 · 폐렴구균 4차',12,'생후 12~15개월'],
+ ['A형간염 1차',12,'생후 12~23개월'],
+ ['일본뇌염 1차 (불활성화 기준, 2차는 1개월 뒤)',12,'생후 12~23개월'],
+ ['DTaP 4차',15,'생후 15~18개월'],
+ ['A형간염 2차 (1차 후 6개월)',18,'1차 6개월 뒤'],
+ ['일본뇌염 3차 (불활성화 기준)',24,'생후 24~35개월'],
+ ['DTaP 5차 · 폴리오 4차 · MMR 2차',48,'만 4~6세'],
+];
+function addMonths(d,m){const r=new Date(d);const day=r.getDate();r.setMonth(r.getMonth()+m);if(r.getDate()<day)r.setDate(0);return r;}
+function fmt(d){return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');}
+function calc(){
+  const v=document.getElementById('birth').value;
+  if(!v){alert('출생일을 선택해주세요.');return;}
+  const birth=new Date(v+'T00:00:00');
+  const today=new Date();today.setHours(0,0,0,0);
+  if(birth>today){alert('출생일이 미래입니다. 다시 확인해주세요.');return;}
+  const ageDays=Math.floor((today-birth)/86400000);
+  const ageM=Math.floor(ageDays/30.44);
+  let html='<tr><th>접종</th><th>권장 시기</th><th style="text-align:right">예정일</th></tr>';
+  let nextFound=false, nextName='';
+  SCHED.forEach(s=>{
+    const due=addMonths(birth,s[1]);
+    const passed=due<today;
+    let cls='';
+    if(passed)cls='done';
+    else if(!nextFound){cls='next';nextFound=true;nextName=s[0]+' ('+fmt(due)+')';}
+    html+='<tr class="'+cls+'"><td>'+s[0]+'</td><td>'+s[2]+'</td><td class="v">'+fmt(due)+(passed?' ✓':'')+'</td></tr>';
+  });
+  document.getElementById('rt').innerHTML=html;
+  document.getElementById('summary').textContent='아기는 오늘 생후 '+ageDays+'일 (약 '+ageM+'개월)'+(nextName?' · 다음 접종: '+nextName:'');
+  document.getElementById('result').classList.add('show');
+}
+</script>
+</body>
+</html>
