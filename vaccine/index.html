@@ -11,6 +11,7 @@
 <link rel="canonical" href="https://yugacalc.com/vaccine/">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3293445488923111" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/style.css">
+<script src="/common.js" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"아기 예방접종 일정 계산기","applicationCategory":"HealthApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"inLanguage":"ko"}
 </script>
@@ -35,6 +36,7 @@
     <div id="summary" style="font-weight:700;margin-bottom:4px"></div>
     <table class="rt" id="rt"></table>
     <div class="note">권장 시기의 시작일 기준입니다. 실제 접종은 아기 컨디션과 병원 사정에 따라 권장 기간 내에서 조정하면 됩니다. 일본뇌염은 백신 종류(불활성화/생백신)에 따라 횟수가 다르며, 인플루엔자는 생후 6개월부터 매년 접종합니다.</div>
+    <button class="sharebtn" onclick="shareResult()">📤 결과 공유하기</button>
   </div>
 </div>
 
@@ -92,6 +94,7 @@ function calc(){
   });
   document.getElementById('rt').innerHTML=html;
   document.getElementById('summary').textContent='아기는 오늘 생후 '+ageDays+'일 (약 '+ageM+'개월)'+(nextName?' · 다음 접종: '+nextName:'');
+  window.__share='우리 아기 예방접종 일정, 다음 접종 놓치지 마세요! 🍼 육아 계산기';
   document.getElementById('result').classList.add('show');
 }
 </script>

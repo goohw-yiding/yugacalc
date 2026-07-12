@@ -11,6 +11,7 @@
 <link rel="canonical" href="https://yugacalc.com/formula/">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3293445488923111" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/style.css">
+<script src="/common.js" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"분유량 계산기","applicationCategory":"HealthApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"inLanguage":"ko"}
 </script>
@@ -47,6 +48,8 @@
     <div class="big" id="total"></div>
     <table class="rt" id="rt"></table>
     <div class="note" id="note"></div>
+    <button class="sharebtn" onclick="shareResult()">📤 결과 공유하기</button>
+    <button class="sharebtn" onclick="shareCard()">🖼️ 결과 이미지 저장</button>
   </div>
 </div>
 
@@ -94,6 +97,7 @@ function calc(){
   document.getElementById('note').textContent=(c[3]
     ?'이유식 병행 시기입니다. 이유식을 잘 먹으면 분유량은 자연스럽게 줄어드니 아기의 신호에 맞추세요. 하루 총 분유량은 1,000ml를 넘지 않는 것이 일반적입니다.'
     :'아기마다 먹는 양의 개인차가 큽니다. 체중이 잘 늘고 있다면 계산량과 달라도 괜찮습니다. 하루 총량은 1,000ml를 넘지 않는 것이 일반적입니다.');
+  window.__share='우리 아기 하루 분유량은 약 '+lo+'~'+hi+'ml! 🍼 육아 계산기';
   document.getElementById('result').classList.add('show');
 }
 </script>

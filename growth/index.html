@@ -11,6 +11,7 @@
 <link rel="canonical" href="https://yugacalc.com/growth/">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3293445488923111" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/style.css">
+<script src="/common.js" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"아기 성장 백분위 계산기","applicationCategory":"HealthApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"inLanguage":"ko"}
 </script>
@@ -51,6 +52,8 @@
     <div class="pctbar-labels"><span>하위</span><span>평균(50)</span><span>상위</span></div>
     <table class="rt" id="rt"></table>
     <div class="note">WHO 성장 기준(2017 소아청소년 성장도표의 0~35개월 구간과 동일 기준)을 바탕으로 한 근사치입니다. 백분위는 한 시점보다 <b>추세</b>가 중요합니다. 백분위가 급격히 떨어지거나 3 미만·97 초과가 지속되면 소아청소년과 상담을 권합니다.</div>
+    <button class="sharebtn" onclick="shareResult()">📤 결과 공유하기</button>
+    <button class="sharebtn" onclick="shareCard()">🖼️ 결과 이미지 저장</button>
   </div>
 </div>
 
@@ -115,6 +118,7 @@ function calc(){
       +'<tr><th>첫돌</th><td class="v">'+fmt(dol)+(dol<today?' (지남)':'')+'</td></tr>';
   document.getElementById('rt').innerHTML=rows;
   document.getElementById('agesum').textContent=(sex==='boy'?'남아':'여아')+' · 생후 '+days+'일 (약 '+m.toFixed(1)+'개월)';
+  window.__share='우리 아기 몸무게 백분위 '+pctText(pW)+'/100! 🍼 육아 계산기';
   document.getElementById('result').classList.add('show');
 }
 </script>
