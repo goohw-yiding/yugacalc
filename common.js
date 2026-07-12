@@ -53,7 +53,7 @@ window.shareResult = function () {
 })();
 
 /* ===== OneSignal 웹푸시 (재방문 유도) — yugacalc.com / appId 입력 시 자동 활성화 ===== */
-window.__onesignalAppId = 'PASTE_ONESIGNAL_APP_ID';
+window.__onesignalAppId = 'c5679e2a-29c7-473f-9e6b-74b6458413fe';
 (function(){
   var id = window.__onesignalAppId;
   if(!id || id.indexOf('PASTE')===0) return;          // 미설정 = 완전 무동작
