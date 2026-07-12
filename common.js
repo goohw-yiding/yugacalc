@@ -51,3 +51,16 @@ window.shareResult = function () {
     }, 'image/png');
   };
 })();
+
+/* ===== OneSignal 웹푸시 (재방문 유도) — yugacalc.com / appId 입력 시 자동 활성화 ===== */
+window.__onesignalAppId = 'PASTE_ONESIGNAL_APP_ID';
+(function(){
+  var id = window.__onesignalAppId;
+  if(!id || id.indexOf('PASTE')===0) return;          // 미설정 = 완전 무동작
+  if(location.protocol!=='https:') return;
+  var s=document.createElement('script');
+  s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js'; s.defer=true;
+  document.head.appendChild(s);
+  window.OneSignalDeferred=window.OneSignalDeferred||[];
+  window.OneSignalDeferred.push(function(OneSignal){ OneSignal.init({ appId:id }); });
+})();
