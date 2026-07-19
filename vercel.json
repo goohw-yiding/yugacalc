@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/((?!closed\\.html$).*)",
+      "destination": "/closed.html",
+      "permanent": false
+    }
+  ]
+}
